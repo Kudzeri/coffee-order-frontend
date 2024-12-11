@@ -8,7 +8,7 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow bg-gray-100 p-8">
-        <h1 className="text-3xl font-semibold text-center mb-8">
+        <h1 className="text-3xl text-center mb-8 font-bold">
           Welcome to Coffee Samurai
         </h1>
       </main>
