@@ -10,9 +10,10 @@ const Login = () => {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    general: "", // Для общего сообщения об ошибке
+    general: "",
   });
   const [loading, setLoading] = useState(false);
+  const [anonLoading, setAnonLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,6 +64,29 @@ const Login = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAnonymousLogin = async () => {
+    setAnonLoading(true);
+    setErrors({ email: "", password: "", general: "" });
+
+    try {
+      const response = await axiosInstance.post("auth/register", {
+        isAnonymous: true,
+      });
+      console.log("Анонимный вход выполнен:", response.data);
+
+      localStorage.setItem("token", response.data.token);
+
+      window.location.href = "/profile";
+    } catch (err) {
+      setErrors((prev) => ({
+        ...prev,
+        general: "Ошибка при анонимном входе. Попробуйте снова.",
+      }));
+    } finally {
+      setAnonLoading(false);
     }
   };
 
@@ -128,6 +152,16 @@ const Login = () => {
             {loading ? "Вход..." : "Войти"}
           </button>
         </form>
+
+        <button
+          onClick={handleAnonymousLogin}
+          className={`w-full mt-4 py-2 bg-gray-300 text-slate-700 rounded-md shadow-md hover:bg-gray-400 hover:shadow-inner ${
+            anonLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={anonLoading}
+        >
+          {anonLoading ? "Загрузка..." : "Войти анонимно"}
+        </button>
       </div>
     </div>
   );
