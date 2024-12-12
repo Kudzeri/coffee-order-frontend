@@ -3,6 +3,7 @@ import axiosInstance from "../../axiosConfig";
 import CategoryCard from "../../components/admin/CategoryCard";
 import Pagination from "../../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdminCategoriesList = () => {
   const [categories, setCategories] = useState([]);
@@ -46,10 +47,12 @@ const AdminCategoriesList = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Админка/Категории</h1>
+        <h1 className="text-2xl font-bold">
+          <Link className="text-yellow-500" to={`/admin`}>Админка</Link>/Категории
+        </h1>
         <button
           onClick={() => navigate("/admin/categories/new")}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
         >
           Создать категорию
         </button>
