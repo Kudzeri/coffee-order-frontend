@@ -9,6 +9,13 @@ const AdminCategoryEdit = () => {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState(null);
   const [error, setError] = useState("");
+  
+    useEffect(() => {
+      const role = localStorage.getItem("role");
+      if (role !== "admin") {
+        navigate("/");
+      }
+    }, [navigate]);
 
   useEffect(() => {
     const fetchCategory = async () => {

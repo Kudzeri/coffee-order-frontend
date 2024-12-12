@@ -9,6 +9,14 @@ const AdminCategoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  
+    useEffect(() => {
+      const role = localStorage.getItem("role");
+      if (role !== "admin" || !role) {
+        navigate("/");
+      }
+    }, [navigate]);
+
   useEffect(() => {
     axiosInstance
       .get(`categories/${id}`)

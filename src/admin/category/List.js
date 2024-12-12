@@ -4,7 +4,6 @@ import CategoryCard from "../../components/admin/CategoryCard";
 import Pagination from "../../components/Pagination";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 const AdminCategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,6 +11,13 @@ const AdminCategoriesList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
+  
+    useEffect(() => {
+      const role = localStorage.getItem("role");
+      if (role !== "admin" || !role) {
+        navigate("/");
+      }
+    }, [navigate]);
 
   useEffect(() => {
     axiosInstance

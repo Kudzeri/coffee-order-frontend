@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminHome = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "admin" || !role) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">

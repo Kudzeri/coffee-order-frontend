@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../../axiosConfig";
 import CategoryForm from "../../components/admin/CategoryForm";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,13 @@ const AdminCategoryCreate = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "admin" || !role) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleCreate = async (data) => {
     setLoading(true);
