@@ -16,10 +16,9 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Для изменения состояния экрана (мобильный/десктоп) в зависимости от размера окна
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024); // 1024px - это граница для десктопа
+      setIsDesktop(window.innerWidth >= 1024);
     };
 
     window.addEventListener("resize", handleResize);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
-import ProductCard from "../components/ProductCard"; // Компонент карточки продукта
+import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
 
 const ProductsPage = () => {

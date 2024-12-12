@@ -11,37 +11,35 @@ const Register = () => {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    general: "", // Для общей ошибки
+    general: "", 
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "", general: "" })); // Сбрасываем ошибки при изменении данных
+    setErrors((prev) => ({ ...prev, [name]: "", general: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrors({ email: "", password: "", general: "" }); // Сбрасываем ошибки перед новым запросом
+    setErrors({ email: "", password: "", general: "" });
 
     try {
       const response = await axiosInstance.post("auth/register", formData);
       console.log("Пользователь зарегистрирован:", response.data);
-      window.location.href = "/login"; // Перенаправление на страницу входа
+      window.location.href = "/login"; 
     } catch (err) {
       if (err.response && err.response.data) {
         const errorMessage =
           err.response.data.message || "Ошибка регистрации. Попробуйте снова.";
 
-        // Если ошибка касается конкретных полей (email или password)
         if (errorMessage.includes("Email")) {
           setErrors((prev) => ({ ...prev, email: errorMessage }));
         } else if (errorMessage.includes("Пароль")) {
           setErrors((prev) => ({ ...prev, password: errorMessage }));
         } else if (errorMessage.includes("Пользователь с таким email")) {
-          // Специфическая ошибка для существующего email
           setErrors((prev) => ({
             ...prev,
             general: "Пользователь с таким email уже существует.",
@@ -65,7 +63,6 @@ const Register = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Регистрация</h2>
 
-        {/* Общая ошибка */}
         {errors.general && (
           <div className="text-red-500 text-sm mb-4">{errors.general}</div>
         )}

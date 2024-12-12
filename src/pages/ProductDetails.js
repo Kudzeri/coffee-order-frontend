@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig"; // Ваш axios конфиг
+import axiosInstance from "../axiosConfig";
 import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
-  const { slug } = useParams(); // Получаем slug продукта из URL
+  const { slug } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axiosInstance
-      .get(`products/${slug}`) // Запрос на эндпоинт для получения данных продукта по slug
+      .get(`products/${slug}`)
       .then((response) => {
         setProduct(response.data.product);
         setLoading(false);

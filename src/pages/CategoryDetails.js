@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig"; // Ваш axios конфиг
+import axiosInstance from "../axiosConfig";
 import { useParams } from "react-router-dom";
 
 const CategoryPage = () => {
