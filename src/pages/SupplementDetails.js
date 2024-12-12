@@ -36,7 +36,7 @@ const SupplementPage = () => {
           <h1 className="text-3xl font-bold mb-4">{supplement.name}</h1>
           <p className="text-xl text-gray-700 mb-6">{supplement.description}</p>
           <p className="text-xl font-semibold text-gray-800">
-            Цена: {supplement.price} руб.
+            Цена: {supplement.price} тг.
           </p>
         </div>
       ) : (

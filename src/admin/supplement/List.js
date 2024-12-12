@@ -74,8 +74,9 @@ const AdminSupplementsList = () => {
             <SupplementCard
               key={supplement._id}
               id={supplement._id}
-              title={supplement.name}
+              name={supplement.name}
               description={supplement.description}
+              price={supplement.price}
             />
           ))
         ) : (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosConfig";
 import { useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdminSupplementPage = () => {
   const { id } = useParams();
@@ -48,12 +49,19 @@ const AdminSupplementPage = () => {
 
   return (
     <div className="p-6">
+        <h1 className="text-2xl font-bold">
+          <Link className="text-yellow-500" to={`/admin`}>
+            Админка
+          </Link>
+          /Добавки
+        </h1>
+
       {supplement ? (
         <div>
           <h1 className="text-3xl font-bold mb-4">{supplement.name}</h1>
           <p className="text-xl text-gray-700 mb-6">{supplement.description}</p>
           <p className="text-xl text-gray-700 mb-6">
-            Цена: {supplement.price} руб.
+            Цена: {supplement.price} тг.
           </p>
 
           <button

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosConfig";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const AdminCategoryPage = () => {
   const { id } = useParams();
@@ -9,13 +9,12 @@ const AdminCategoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  
-    useEffect(() => {
-      const role = localStorage.getItem("role");
-      if (role !== "admin" || !role) {
-        navigate("/");
-      }
-    }, [navigate]);
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "admin" || !role) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     axiosInstance
@@ -49,6 +48,12 @@ const AdminCategoryPage = () => {
 
   return (
     <div className="p-6">
+      <h1 className="text-2xl font-bold">
+        <Link className="text-yellow-500" to={`/admin`}>
+          Админка
+        </Link>
+        /Категории
+      </h1>
       {category ? (
         <div>
           <h1 className="text-3xl font-bold mb-4">{category.name}</h1>
