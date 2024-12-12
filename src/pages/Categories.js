@@ -14,7 +14,6 @@ const CategoriesPage = () => {
     axiosInstance
       .get(`categories?page=${currentPage}`)
       .then((response) => {
-        // Проверяем, что данные categories это массив
         if (Array.isArray(response.data.categories)) {
           setCategories(response.data.categories);
           setTotalPages(response.data.totalPages);
@@ -48,7 +47,8 @@ const CategoriesPage = () => {
         {categories.length > 0 ? (
           categories.map((category) => (
             <CategoryCard
-              key={category.id}
+              key={category._id}
+              id={category._id}
               title={category.name}
               description={category.description}
             />
