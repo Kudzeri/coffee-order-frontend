@@ -1,8 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    navigate("/login");
+  };
 
   return (
     <header className="bg-red-900 text-white p-4 shadow-lg">
@@ -14,11 +21,21 @@ const Header = () => {
             </Link>
           </li>
           {token ? (
-            <li>
-              <Link to="/profile" className="hover:text-yellow-400">
-                Profile
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link to="/profile" className="hover:text-yellow-400">
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="hover:text-yellow-400 bg-transparent border-0 cursor-pointer"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
           ) : (
             <>
               <li>

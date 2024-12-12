@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 
 const Profile = () => {
-  // Состояние для хранения данных профиля и состояния загрузки
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
@@ -12,18 +11,16 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Запрос к серверу для получения данных профиля
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await axiosInstance.get("auth/me");
-        const user = response.data.user; // Доступ к данным пользователя
+        const user = response.data.user;
 
-        // Обновляем состояние профиля с приходящими данными
         setProfileData({
           name: user.name || "Отсутствует",
           email: user.email || "Отсутствует",
-          phone: user.phone || "Отсутствует", // Если поле phone есть на сервере
+          phone: user.phone || "Отсутствует",
           isAnonymous: user.isAnonymous || false,
         });
       } catch (err) {
@@ -40,15 +37,15 @@ const Profile = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Профиль</h2>
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          Профиль
+        </h2>
 
         {loading && (
           <div className="text-gray-500 text-center">Загрузка...</div>
         )}
 
-        {error && (
-          <div className="text-red-500 text-center mb-4">{error}</div>
-        )}
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
 
         {!loading && !error && (
           <div>
@@ -66,8 +63,14 @@ const Profile = () => {
             </div>
             <div className="mb-4">
               <strong className="text-gray-700">Статус:</strong>
-              <p className={`text-gray-600 ${profileData.isAnonymous ? "text-red-500" : "text-green-500"}`}>
-                {profileData.isAnonymous ? "Анонимный пользователь" : "Пользователь"}
+              <p
+                className={`text-gray-600 ${
+                  profileData.isAnonymous ? "text-red-500" : "text-green-500"
+                }`}
+              >
+                {profileData.isAnonymous
+                  ? "Анонимный пользователь"
+                  : "Пользователь"}
               </p>
             </div>
           </div>
