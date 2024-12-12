@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosConfig";
 import CategoryCard from "../../components/admin/CategoryCard";
 import Pagination from "../../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const AdminCategoriesList = () => {
   const [categories, setCategories] = useState([]);
@@ -9,6 +10,7 @@ const AdminCategoriesList = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance
@@ -42,8 +44,17 @@ const AdminCategoriesList = () => {
   }
 
   return (
-    <div>
-        <h1>Админка/Категории</h1>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Админка/Категории</h1>
+        <button
+          onClick={() => navigate("/admin/categories/new")}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Создать категорию
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
         {categories.length > 0 ? (
           categories.map((category) => (

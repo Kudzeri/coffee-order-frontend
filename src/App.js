@@ -10,6 +10,8 @@ import CategoryDetails from "./pages/CategoryDetails";
 import AdminHome from "./admin/Home";
 import AdminCategoriesList from "./admin/category/List";
 import AdminCategoryPage from "./admin/category/Show";
+import AdminCategoryEdit from "./admin/category/Edit";
+import AdminCategoryCreate from "./admin/category/Create";
 
 function App() {
   return (
@@ -25,8 +27,18 @@ function App() {
             <Route path="/categories/:id" element={<CategoryDetails />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/categories" element={<AdminCategoriesList />} />
-            <Route path="/admin/categories/:id" element={<AdminCategoryPage />} />
-            {/* <Route path="/admin/categories/edit/:id" element={<AdminCategoryEdit />} /> */}
+            <Route
+              path="/admin/categories/:id"
+              element={<AdminCategoryPage />}
+            />
+            <Route
+              path="/admin/categories/edit/:id"
+              element={<AdminCategoryEdit />}
+            />
+            <Route
+              path="/admin/categories/new"
+              element={<AdminCategoryCreate />}
+            />
           </Routes>
         </main>
         <Footer />
