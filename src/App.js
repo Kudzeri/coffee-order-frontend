@@ -20,6 +20,10 @@ import AdminSupplementsList from "./admin/supplement/List";
 import AdminSupplementPage from "./admin/supplement/Show";
 import AdminSupplementEdit from "./admin/supplement/Edit";
 import AdminSupplementCreate from "./admin/supplement/Create";
+import AdminProductsList from "./admin/product/List";
+import AdminProductPage from "./admin/product/Show";
+import AdminProductEdit from "./admin/product/Edit";
+import AdminProductCreate from "./admin/product/Create";
 import Home from "./pages/Home";
 
 function App() {
@@ -68,6 +72,16 @@ function App() {
             <Route
               path="/admin/supplements/new"
               element={<AdminSupplementCreate />}
+            />
+            <Route path="/admin/products" element={<AdminProductsList />} />
+            <Route path="/admin/products/:id" element={<AdminProductPage />} />
+            <Route
+              path="/admin/products/edit/:id"
+              element={<AdminProductEdit />}
+            />
+            <Route
+              path="/admin/products/new"
+              element={<AdminProductCreate />}
             />
           </Routes>
         </main>
