@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Categories from "./pages/Categories";
 import CategoryDetails from "./pages/CategoryDetails";
+import AdminHome from "./admin/Home";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryDetails />} />
+            <Route path="/admin" element={<AdminHome />} />
           </Routes>
         </main>
         <Footer />

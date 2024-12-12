@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; 
 import axiosInstance from "../axiosConfig";
 
 const Profile = () => {
@@ -7,6 +8,7 @@ const Profile = () => {
     email: "",
     phone: "",
     isAnonymous: false,
+    role: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,6 +24,7 @@ const Profile = () => {
           email: user.email || "Отсутствует",
           phone: user.phone || "Отсутствует",
           isAnonymous: user.isAnonymous || false,
+          role: user.role || "", 
         });
       } catch (err) {
         setError("Не удалось загрузить данные профиля.");
@@ -33,7 +36,6 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  // Отображаем данные
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -73,6 +75,17 @@ const Profile = () => {
                   : "Пользователь"}
               </p>
             </div>
+
+            {profileData.role === "admin" && (
+              <div className="text-center mt-6">
+                <Link
+                  to="/admin"
+                  className="inline-block bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-red-600"
+                >
+                  Перейти в админ панель
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
