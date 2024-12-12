@@ -7,44 +7,60 @@ const Login = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    general: "", // Для общего сообщения об ошибке
+  });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setErrors({ email: "", password: "", general: "" });
 
     try {
-      const response = await axiosInstance.post("/login", formData);
-      console.log("Пользователь вошел:", response.data);
+      const response = await axiosInstance.post("auth/login", formData);
+      console.log("Пользователь авторизован:", response.data);
+
+      localStorage.setItem("token", response.data.token);
+
       window.location.href = "/profile";
     } catch (err) {
-      setError("Ошибка входа. Проверьте данные.");
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (err.response && err.response.data) {
+        const errorData = err.response.data;
 
-  const handleAnonymousLogin = async () => {
-    setLoading(true);
-    setError("");
+        if (errorData.errors) {
+          const emailError = errorData.errors.find((err) =>
+            err.includes("Email")
+          );
+          const passwordError = errorData.errors.find((err) =>
+            err.includes("Пароль")
+          );
 
-    try {
-      const response = await axiosInstance.post("/login", {
-        email: "",
-        password: "",
-        isAnonymous: true,
-      });
-      console.log("Анонимный вход:", response.data);
-      window.location.href = "/profile";
-    } catch (err) {
-      setError("Ошибка анонимного входа.");
+          if (emailError) {
+            setErrors((prev) => ({ ...prev, email: emailError }));
+          }
+          if (passwordError) {
+            setErrors((prev) => ({ ...prev, password: passwordError }));
+          }
+        }
+
+        if (errorData.message) {
+          setErrors((prev) => ({ ...prev, general: errorData.message }));
+        }
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          general: "Неизвестная ошибка. Попробуйте снова.",
+        }));
+      }
     } finally {
       setLoading(false);
     }
@@ -54,7 +70,11 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Вход</h2>
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+
+        {errors.general && (
+          <div className="text-red-500 text-sm mb-4">{errors.general}</div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -72,7 +92,11 @@ const Login = () => {
               className="w-full text-gray-700 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600"
               required
             />
+            {errors.email && (
+              <div className="text-red-500 text-sm">{errors.email}</div>
+            )}
           </div>
+
           <div className="mb-4">
             <label
               htmlFor="password"
@@ -89,7 +113,11 @@ const Login = () => {
               className="w-full text-gray-700 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600"
               required
             />
+            {errors.password && (
+              <div className="text-red-500 text-sm">{errors.password}</div>
+            )}
           </div>
+
           <button
             type="submit"
             className={`w-full py-2 bg-yellow-500 text-slate-700 rounded-md shadow-md hover:bg-yellow-600 hover:shadow-inner hover:text-white ${
@@ -100,17 +128,6 @@ const Login = () => {
             {loading ? "Вход..." : "Войти"}
           </button>
         </form>
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={handleAnonymousLogin}
-            className={`w-full py-2 bg-gray-300 text-slate-700 rounded-md shadow-md hover:bg-gray-400 hover:text-white ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={loading}
-          >
-            {loading ? "Вход..." : "Анонимный вход"}
-          </button>
-        </div>
       </div>
     </div>
   );
