@@ -6,9 +6,11 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Categories from "./pages/Categories";
+import Products from "./pages/Products";
 import CategoryDetails from "./pages/CategoryDetails";
 import Supplements from "./pages/Supplements";
 import SupplementDetails from "./pages/SupplementDetails";
+import ProductDetails from "./pages/ProductDetails";
 import AdminHome from "./admin/Home";
 import AdminCategoriesList from "./admin/category/List";
 import AdminCategoryPage from "./admin/category/Show";
@@ -33,6 +35,8 @@ function App() {
             <Route path="/categories/:id" element={<CategoryDetails />} />
             <Route path="/supplements" element={<Supplements />} />
             <Route path="/supplements/:id" element={<SupplementDetails />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:slug" element={<ProductDetails />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/categories" element={<AdminCategoriesList />} />
             <Route
