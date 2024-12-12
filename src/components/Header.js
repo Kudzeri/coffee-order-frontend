@@ -31,7 +31,7 @@ const Header = () => {
         <div className="flex items-center">
           {isDesktop && (
             <div className="flex space-x-4">
-              <Link to="/" className="hover:text-yellow-400 sm:text-sm font-bold">
+              <Link to="/" className="text-yellow-400 hover:text-yellow-300 sm:text-sm font-bold">
                 Coffee Samurai
               </Link>
               <Link
@@ -123,7 +123,7 @@ const Header = () => {
           } absolute top-16 left-1/2 transform -translate-x-1/2 w-full bg-red-900 flex-col items-center justify-center`}
         >
           <li className="py-2 px-4 text-center">
-            <Link to="/" className="block text-white hover:text-yellow-400 font-bold">
+            <Link to="/" className="block text-yellow-400 hover:text-yellow-300 font-bold">
             Coffee Samurai
             </Link>
           </li>

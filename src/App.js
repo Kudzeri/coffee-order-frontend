@@ -20,6 +20,7 @@ import AdminSupplementsList from "./admin/supplement/List";
 import AdminSupplementPage from "./admin/supplement/Show";
 import AdminSupplementEdit from "./admin/supplement/Edit";
 import AdminSupplementCreate from "./admin/supplement/Create";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Header />
         <main className="flex-grow bg-gray-100 p-8">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />

@@ -38,7 +38,7 @@ const ProductPage = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="max-w-20 max-h-20 rounded-lg shadow-md mx-auto" 
+                className="max-w-full max-h-auto rounded-lg shadow-md mx-auto" 
               />
             </div>
 
