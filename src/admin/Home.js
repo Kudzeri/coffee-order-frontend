@@ -38,7 +38,7 @@ const AdminHome = () => {
             to="/admin/products"
             className="block text-center bg-purple-500 text-white py-3 px-6 rounded-lg shadow-lg hover:bg-purple-600"
           >
-            Продукты
+            Меню
           </Link>
         </div>
       </div>

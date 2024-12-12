@@ -24,6 +24,11 @@ const Header = () => {
               Категории
             </Link>
           </li>
+          <li>
+            <Link to="/supplements" className="hover:text-yellow-400">
+              Добавки
+            </Link>
+          </li>
         </ul>
 
         <ul className="flex space-x-4 sm:space-x-6 md:space-x-8">

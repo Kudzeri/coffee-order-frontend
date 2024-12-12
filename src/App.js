@@ -7,11 +7,17 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Categories from "./pages/Categories";
 import CategoryDetails from "./pages/CategoryDetails";
+import Supplements from "./pages/Supplements";
+import SupplementDetails from "./pages/SupplementDetails";
 import AdminHome from "./admin/Home";
 import AdminCategoriesList from "./admin/category/List";
 import AdminCategoryPage from "./admin/category/Show";
 import AdminCategoryEdit from "./admin/category/Edit";
 import AdminCategoryCreate from "./admin/category/Create";
+import AdminSupplementsList from "./admin/supplement/List";
+import AdminSupplementPage from "./admin/supplement/Show";
+import AdminSupplementEdit from "./admin/supplement/Edit";
+import AdminSupplementCreate from "./admin/supplement/Create";
 
 function App() {
   return (
@@ -25,6 +31,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryDetails />} />
+            <Route path="/supplements" element={<Supplements />} />
+            <Route path="/supplements/:id" element={<SupplementDetails />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/categories" element={<AdminCategoriesList />} />
             <Route
@@ -38,6 +46,22 @@ function App() {
             <Route
               path="/admin/categories/new"
               element={<AdminCategoryCreate />}
+            />
+            <Route
+              path="/admin/supplements"
+              element={<AdminSupplementsList />}
+            />
+            <Route
+              path="/admin/supplements/:id"
+              element={<AdminSupplementPage />}
+            />
+            <Route
+              path="/admin/supplements/edit/:id"
+              element={<AdminSupplementEdit />}
+            />
+            <Route
+              path="/admin/supplements/new"
+              element={<AdminSupplementCreate />}
             />
           </Routes>
         </main>
