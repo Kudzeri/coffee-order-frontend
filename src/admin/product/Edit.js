@@ -1,59 +1,67 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosConfig";
-import ProductForm from "../../components/admin/ProductForm"; // Используем компонент для формы продукта
+import ProductForm from "../../components/admin/ProductForm";
 import { useParams, useNavigate } from "react-router-dom";
 
 const AdminProductEdit = () => {
-  const { id } = useParams(); // Получаем id продукта из параметров URL
+  const { id, slug } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [allSupplements, setAllSupplements] = useState([]);
+  const [supplements, setSupplements] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "admin") {
-      navigate("/");
+      navigate("/"); 
     }
   }, [navigate]);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchData = async () => {
       setLoading(true);
+
+      const fetchSupplements = async () => {
+        try {
+          const response = await axiosInstance.get("/supplements");
+          setSupplements(response.data.supplements || []);
+        } catch (err) {
+          setError("Ошибка при загрузке добавок");
+        }
+      };
+
+      const fetchProduct = async () => {
+        try {
+          const response = await axiosInstance.get(`products/${slug}`);
+          setProduct(response.data.product);
+        } catch (err) {
+          setError("Ошибка при загрузке продукта");
+        }
+      };
+
+      const fetchCategories = async () => {
+        try {
+          const response = await axiosInstance.get("categories");
+          setCategories(response.data);
+        } catch (err) {
+          setError("Ошибка при загрузке категорий");
+        }
+      };
+
       try {
-        const response = await axiosInstance.get(`products/${id}`);
-        setProduct(response.data.product);
+        await Promise.all([fetchCategories(), fetchSupplements(), fetchProduct()]);
       } catch (err) {
-        setError("Ошибка при загрузке продукта");
+        // You could handle the error here if needed
+        setError("Ошибка при загрузке данных");
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchCategories = async () => {
-      try {
-        const response = await axiosInstance.get("categories");
-        setCategories(response.data);
-      } catch (err) {
-        setError("Ошибка при загрузке категорий");
-      }
-    };
-
-    const fetchSupplements = async () => {
-      try {
-        const response = await axiosInstance.get("supplements");
-        setAllSupplements(response.data);
-      } catch (err) {
-        setError("Ошибка при загрузке добавок");
-      }
-    };
-
-    fetchProduct();
-    fetchCategories();
-    fetchSupplements();
-  }, [id]);
+    fetchData();
+  }, [slug]);
 
   const handleUpdate = async (data) => {
     setLoading(true);
@@ -83,7 +91,7 @@ const AdminProductEdit = () => {
         <ProductForm
           initialData={product}
           categories={categories}
-          supplements={allSupplements}
+          supplements={supplements}
           onSubmit={handleUpdate}
           loading={loading}
         />

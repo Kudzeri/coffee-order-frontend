@@ -74,9 +74,9 @@ function App() {
               element={<AdminSupplementCreate />}
             />
             <Route path="/admin/products" element={<AdminProductsList />} />
-            <Route path="/admin/products/:id" element={<AdminProductPage />} />
+            <Route path="/admin/products/:slug" element={<AdminProductPage />} />
             <Route
-              path="/admin/products/edit/:id"
+              path="/admin/products/edit/:slug"
               element={<AdminProductEdit />}
             />
             <Route

@@ -1,38 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../axiosConfig";
-import ProductForm from "../../components/admin/ProductForm"; // Импортируем компонент для формы продукта
-import { useNavigate } from "react-router-dom";
+import ProductForm from "../../components/admin/ProductForm";
 
 const AdminProductCreate = () => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [supplements, setSupplements] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role !== "admin" || !role) {
-      navigate("/");
-    }
-  }, [navigate]);
+    const fetchSupplements = async () => {
+      try {
+        const response = await axiosInstance.get("/supplements");
+        setSupplements(response.data.supplements || []);
+      } catch (err) {
+        setError("Ошибка при загрузке добавок");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleCreate = async (data) => {
-    setLoading(true);
-    setError("");
-    try {
-      await axiosInstance.post("products", data);
-      navigate("/admin/products");
-    } catch (err) {
-      setError("Ошибка при создании продукта");
-    } finally {
-      setLoading(false);
-    }
+    fetchSupplements();
+  }, []);
+
+  const handleSubmit = (data) => {
+    const productData = {
+      ...data,
+      supplements: data.supplements.map((supplementId) => supplementId),
+    };
+    console.log("Отправка данных:", productData);
   };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Создание продукта</h1>
       {error && <div className="text-red-500 mb-4">{error}</div>}
-      <ProductForm onSubmit={handleCreate} loading={loading} />
+      {loading ? (
+        <div>Загрузка...</div>
+      ) : (
+        <ProductForm
+          initialData={{}}
+          allSupplements={supplements}
+          onSubmit={handleSubmit}
+          loading={loading}
+        />
+      )}
     </div>
   );
 };
