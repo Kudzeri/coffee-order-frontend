@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
+import OrdersHistory from "../components/OrdersHistory"; // Убедитесь, что путь правильный
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -9,6 +10,7 @@ const Profile = () => {
     phone: "",
     isAnonymous: false,
     role: "",
+    userId: "", // Добавляем userId
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -24,7 +26,8 @@ const Profile = () => {
           email: user.email || "Отсутствует",
           phone: user.phone || "Отсутствует",
           isAnonymous: user.isAnonymous || false,
-          role: user.role || "", 
+          role: user.role || "",
+          userId: user._id || "", 
         });
       } catch (err) {
         setError("Не удалось загрузить данные профиля.");
@@ -86,6 +89,8 @@ const Profile = () => {
                 </Link>
               </div>
             )}
+
+            <OrdersHistory userId={profileData.userId} />
           </div>
         )}
       </div>

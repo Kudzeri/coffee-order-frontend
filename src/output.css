@@ -631,6 +631,9 @@ video {
 .max-w-sm {
   max-width: 24rem;
 }
+.max-w-2xl {
+  max-width: 42rem;
+}
 .flex-grow {
   flex-grow: 1;
 }
@@ -701,6 +704,9 @@ video {
 }
 .border-0 {
   border-width: 0px;
+}
+.border-b {
+  border-bottom-width: 1px;
 }
 .border-gray-200 {
   --tw-border-opacity: 1;
