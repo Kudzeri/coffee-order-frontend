@@ -1,69 +1,165 @@
-import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig"; // Импортируем ваш axios экземпляр
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../axiosConfig';
 
-const Cart = () => {
-  const [orders, setOrders] = useState([]);
-  
-  useEffect(() => {
-    const fetchOrders = async () => {
+const CartPage = () => {
+  const [cart, setCart] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const CheckoutButton = ({ cart }) => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosInstance.get('/auth/me');
+          setUser(response.data.user);
+        } catch (error) {
+          console.error("Ошибка при получении данных пользователя", error);
+        }
+      };
+
+      fetchUserData();
+    }, []);
+
+    const handleOrder = async () => {
+      if (!user) {
+        alert("Не удалось получить данные пользователя.");
+        return;
+      }
+
+      const orderData = {
+        user: user._id, 
+        products: cart.products.map(item => ({
+          product: item.product, 
+          quantity: item.quantity 
+        })),
+        supplements: cart.supplements.map(item => ({
+          supplement: item.supplement, 
+          quantity: item.quantity     
+        })),
+        totalPrice: cart.totalPrice, 
+        status: "pending",           
+        paymentMethod: "card"        
+      };
+
       try {
-        const response = await axiosInstance.get("/orders");
-        setOrders(response.data.orders);
+        const response = await axiosInstance.post('/orders', orderData);
+
+        if (response.status === 201) {
+          alert("Заказ успешно создан!");
+        }
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        console.error("Ошибка при создании заказа:", error);
+        alert("Не удалось создать заказ.");
       }
     };
-    
-    fetchOrders();
+
+    return <button 
+    onClick={handleOrder} 
+    className="bg-green-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300 shadow-lg transform hover:scale-105"
+  >
+    Оформить заказ
+  </button>
+  ;
+  };
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('user_cart'));
+
+    if (storedCart) {
+      setCart(storedCart);
+      calculateTotalPrice(storedCart);
+    } else {
+      setCart({ products: [], supplements: [], totalPrice: 0 });
+    }
   }, []);
 
+  const calculateTotalPrice = (cart) => {
+    const productTotal = cart.products.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    const supplementTotal = cart.supplements.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    setTotalPrice(productTotal + supplementTotal);
+  };
+
+  const handleRemoveProduct = (productId) => {
+    const updatedCart = { ...cart };
+    updatedCart.products = updatedCart.products.filter(
+      (product) => product.product !== productId
+    );
+    updateCartInLocalStorage(updatedCart);
+    setCart(updatedCart);
+    calculateTotalPrice(updatedCart);
+  };
+
+  const handleRemoveSupplement = (supplementId) => {
+    const updatedCart = { ...cart };
+    updatedCart.supplements = updatedCart.supplements.filter(
+      (supplement) => supplement.supplement !== supplementId
+    );
+    updateCartInLocalStorage(updatedCart);
+    setCart(updatedCart);
+    calculateTotalPrice(updatedCart);
+  };
+
+  const updateCartInLocalStorage = (updatedCart) => {
+    localStorage.setItem('user_cart', JSON.stringify(updatedCart));
+  };
+
+  if (!cart) {
+    return <div>Загрузка...</div>;
+  }
+
+  if (cart.products.length === 0 && cart.supplements.length === 0) {
+    return <div>Ваша корзина пуста</div>;
+  }
+
   return (
-    <div className="max-w-7xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Корзина</h2>
-      {orders.length === 0 ? (
-        <p>Корзина пуста</p>
-      ) : (
-        orders.map(order => (
-          <div key={order._id} className="border p-4 mb-4 rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-medium">Заказ № {order._id}</h3>
-              <span className={`text-sm font-semibold ${order.status === "completed" ? "text-green-500" : "text-yellow-500"}`}>
-                {order.status}
-              </span>
-            </div>
-            <div className="space-y-2">
-              <div>
-                <h4 className="font-semibold">Продукты:</h4>
-                <ul className="list-disc pl-5">
-                  {order.products.map((item) => (
-                    <li key={item.product} className="flex justify-between">
-                      <span>Продукт: {item.product}</span>
-                      <span>Количество: {item.quantity}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold">Добавки:</h4>
-                <ul className="list-disc pl-5">
-                  {order.supplements.map((item) => (
-                    <li key={item.supplement} className="flex justify-between">
-                      <span>Добавка: {item.supplement}</span>
-                      <span>Количество: {item.quantity}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <span className="font-semibold">Метод оплаты: {order.paymentMethod}</span>
-                <span className="text-lg font-semibold">Общая сумма: ${order.totalPrice}</span>
-              </div>
-            </div>
-          </div>
-        ))
-      )}
+    <div className="container mx-auto px-6 py-8">
+      <h1 className="text-3xl font-semibold text-gray-800 mb-4">Корзина</h1>
+      
+      <div className="bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Товары:</h2>
+        <ul className="space-y-4">
+          {cart.products.map((product) => (
+            <li key={product.product} className="flex justify-between items-center">
+              <span className="text-lg">{product.name} x {product.quantity}</span>
+              <button
+                onClick={() => handleRemoveProduct(product.product)}
+                className="text-red-600 hover:text-red-800"
+              >
+                Удалить
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4">Добавки:</h2>
+        <ul className="space-y-4">
+          {cart.supplements.map((supplement) => (
+            <li key={supplement.supplement} className="flex justify-between items-center">
+              <span className="text-lg">{supplement.name} x {supplement.quantity}</span>
+              <button
+                onClick={() => handleRemoveSupplement(supplement.supplement)}
+                className="text-red-600 hover:text-red-800"
+              >
+                Удалить
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 text-right">
+          <p className="text-xl font-semibold">Итого: {cart.totalPrice} тг.</p>
+        </div>
+      </div>
+      <CheckoutButton cart={cart} />
     </div>
   );
 };
 
-export default Cart;
+export default CartPage;
