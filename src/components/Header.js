@@ -52,6 +52,12 @@ const Header = () => {
               >
                 Меню
               </Link>
+              <Link
+                to="/cart"
+                className="hover:text-yellow-400 sm:text-sm"
+              >
+                Корзина
+              </Link>
             </div>
           )}
 
@@ -149,6 +155,12 @@ const Header = () => {
               className="block text-white hover:text-yellow-400"
             >
               Меню
+            </Link>
+            <Link
+              to="/cart"
+              className="block text-white hover:text-yellow-400"
+            >
+              Корзина
             </Link>
           </li>
           {token ? (

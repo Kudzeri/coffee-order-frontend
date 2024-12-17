@@ -26,6 +26,7 @@ import AdminProductEdit from "./admin/product/Edit";
 import AdminProductCreate from "./admin/product/Create";
 import Home from "./pages/Home";
 import EditProfile from './pages/EditProfile'
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -87,6 +88,10 @@ function App() {
             <Route 
             path="/profile/edit"
             element={ <EditProfile />}
+            />
+            <Route 
+            path="/cart"
+            element={ <Cart />}
             />
           </Routes>
         </main>
