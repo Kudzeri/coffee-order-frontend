@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+Вот пример README.md, который можно использовать для вашего проекта, с учетом предоставленной информации:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```md
+# Coffee Samurai - Frontend
 
-## Available Scripts
+## Описание
+Проект **Coffee Samurai** — это фронтенд часть для сайта кофейни, который поможет автоматизировать процесс заказов. Сайт ориентирован на студентов и молодежь, предлагая удобный интерфейс для выбора и заказа товаров из меню кофейни.
 
-In the project directory, you can run:
+## Технологии
+- **React** — библиотека для построения пользовательского интерфейса.
+- **Axios** — для выполнения HTTP-запросов.
+- **Tailwind CSS** — утилитарный CSS-фреймворк для быстрого создания адаптивных интерфейсов.
 
-### `npm start`
+## Целевая аудитория
+Проект ориентирован на студентов и молодежь, которые хотят удобно заказывать кофе и добавки через интернет.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Основные функции
+1. **Регистрация и вход** — пользователи могут зарегистрироваться и войти в систему.
+2. **Анонимный вход** — возможность войти без регистрации.
+3. **Просмотр меню** — отображение категорий добавок, товаров и их цен.
+4. **Добавление товаров в корзину** — пользователи могут добавлять товары в корзину.
+5. **Отправка заказа** — возможность отправки заказов с выбранными товарами.
+6. **Админка** — возможность создания категорий, добавок и товаров в меню, а также изменения статуса заказов.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Установка и запуск
 
-### `npm test`
+### 1. Клонирование репозитория
+Для начала клонируйте репозиторий проекта:
+```bash
+git clone https://github.com/Kudzeri/coffee-order-frontend.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Настройка конфигурации
+В файле `src/axiosConfig.js` настройте ссылку на ваш сервер (API).
 
-### `npm run build`
+### 3. Установка зависимостей
+Перейдите в каталог проекта и выполните команду для установки зависимостей:
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. Запуск проекта
+Для запуска проекта на локальной машине используйте команду:
+```bash
+npm run start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Проект будет доступен по адресу [http://localhost:3000](http://localhost:3000).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Структура проекта
+- `src/` — исходный код
+  - `components/` — компоненты (например, форма входа, корзина, карточки товаров).
+  - `pages/` — страницы (например, домашняя страница, страница админки).
+  - `axiosConfig.js` — конфигурация для Axios, настройка базового URL.
+  
+## Взаимодействие с API
+Фронтенд взаимодействует с сервером через REST API. Убедитесь, что правильно настроили URL-адрес в `src/axiosConfig.js`, чтобы запросы к API были корректными.
 
-### `npm run eject`
+## Сборка и деплой
+Для сборки проекта для продакшн-окружения используйте:
+```bash
+npm run build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+После этого вы получите оптимизированную версию проекта, готовую к деплою.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Контрибьютинг
+Если вы хотите внести вклад в проект, создайте пулл-реквест с описанием внесенных изменений.
