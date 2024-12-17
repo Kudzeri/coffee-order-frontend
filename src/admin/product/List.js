@@ -57,7 +57,7 @@ const AdminProductsList = () => {
           <Link className="text-yellow-500" to={`/admin`}>
             Админка
           </Link>
-          /Добавки
+          /Товары
         </h1>
         <button
           onClick={() => navigate("/admin/products/new")}

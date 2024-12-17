@@ -25,6 +25,7 @@ import AdminProductPage from "./admin/product/Show";
 import AdminProductEdit from "./admin/product/Edit";
 import AdminProductCreate from "./admin/product/Create";
 import Home from "./pages/Home";
+import EditProfile from './pages/EditProfile'
 
 function App() {
   return (
@@ -82,6 +83,10 @@ function App() {
             <Route
               path="/admin/products/new"
               element={<AdminProductCreate />}
+            />
+            <Route 
+            path="/profile/edit"
+            element={ <EditProfile />}
             />
           </Routes>
         </main>

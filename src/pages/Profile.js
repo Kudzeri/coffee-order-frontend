@@ -26,7 +26,7 @@ const Profile = () => {
           phone: user.phone || "Отсутствует",
           isAnonymous: user.isAnonymous || false,
           role: user.role || "",
-          userId: user._id || "", 
+          userId: user._id || "",
         });
       } catch (err) {
         setError("Не удалось загрузить данные профиля.");
@@ -78,6 +78,7 @@ const Profile = () => {
               </p>
             </div>
 
+            {/* Кнопка для админов */}
             {profileData.role === "admin" && (
               <div className="text-center mt-6">
                 <Link
@@ -89,6 +90,17 @@ const Profile = () => {
               </div>
             )}
 
+            {/* Кнопка редактирования для неанонимных пользователей */}
+            {!profileData.isAnonymous && (
+              <div className="text-center mt-4">
+                <Link
+                  to="/profile/edit"
+                  className="inline-block bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600"
+                >
+                  Редактировать профиль
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
