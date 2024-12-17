@@ -47,6 +47,7 @@ const CartPage = () => {
 
         if (response.status === 201) {
           alert("Заказ успешно создан!");
+          localStorage.removeItem('user_cart')
         }
       } catch (error) {
         console.error("Ошибка при создании заказа:", error);
