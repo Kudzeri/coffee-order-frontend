@@ -5,10 +5,9 @@ const Cart = () => {
   const [orders, setOrders] = useState([]);
   
   useEffect(() => {
-    // Получаем заказы с API
     const fetchOrders = async () => {
       try {
-        const response = await axiosInstance.get("/api/orders");
+        const response = await axiosInstance.get("/orders");
         setOrders(response.data.orders);
       } catch (error) {
         console.error("Error fetching orders:", error);
