@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../axiosConfig";
 
 const ProductPage = () => {
-  const { slug } = useParams(); 
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedSupplements, setSelectedSupplements] = useState([]);
 
   useEffect(() => {
     axiosInstance
-      .get(`products/${slug}`)
+      .get(`/products/${slug}`)
       .then((response) => {
         setProduct(response.data.product);
         setLoading(false);
@@ -21,6 +22,17 @@ const ProductPage = () => {
       });
   }, [slug]);
 
+  const handleSupplementChange = (supplementId) => {
+    setSelectedSupplements((prev) => {
+      if (prev.includes(supplementId)) {
+        return prev.filter((id) => id !== supplementId);
+      } else {
+        return [...prev, supplementId];
+      }
+    });
+  };
+
+  
   if (loading) {
     return <div className="text-center text-xl text-gray-600">Загрузка...</div>;
   }
@@ -38,7 +50,7 @@ const ProductPage = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="max-w-full max-h-auto rounded-lg shadow-md mx-auto" 
+                className="max-w-full max-h-auto rounded-lg shadow-md mx-auto"
               />
             </div>
 
@@ -50,8 +62,7 @@ const ProductPage = () => {
                 {product.description}
               </p>
               <p className="text-lg text-gray-900 font-semibold mb-6">
-                Цена:{" "}
-                <span className="text-green-600">{product.price} тг.</span>
+                Цена: <span className="text-green-600">{product.price} тг.</span>
               </p>
 
               <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-6">
@@ -63,40 +74,39 @@ const ProductPage = () => {
               </div>
 
               {product.supplements && product.supplements.length > 0 && (
-                <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+                <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-6">
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                     Добавки:
                   </h2>
                   <ul className="space-y-4">
                     {product.supplements.map((supplement) => (
-                      <li
-                        key={supplement._id}
-                        className="p-4 bg-white rounded-lg shadow-sm"
-                      >
-                        <p className="font-semibold text-gray-800">
-                          {supplement.name}
-                        </p>
-                        <p className="text-gray-600">
-                          {supplement.description}
-                        </p>
-                        <p className="text-gray-900 font-semibold">
-                          Цена:{" "}
-                          <span className="text-green-600">
-                            {supplement.price} тг.
-                          </span>
-                        </p>
+                      <li key={supplement._id} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id={supplement._id}
+                          value={supplement._id}
+                          onChange={() => handleSupplementChange(supplement._id)}
+                          className="mr-2"
+                        />
+                        <label htmlFor={supplement._id} className="text-gray-800">
+                          {supplement.name} ({supplement.price} тг.)
+                        </label>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
+
+              <button
+                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+              >
+                Добавить в корзину
+              </button>
             </div>
           </div>
         </div>
       ) : (
-        <div className="text-center text-xl text-gray-600">
-          Продукт не найден
-        </div>
+        <div className="text-center text-xl text-gray-600">Продукт не найден</div>
       )}
     </div>
   );

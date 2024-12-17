@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
-import OrdersHistory from "../components/OrdersHistory"; // Убедитесь, что путь правильный
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -10,7 +9,7 @@ const Profile = () => {
     phone: "",
     isAnonymous: false,
     role: "",
-    userId: "", // Добавляем userId
+    userId: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -90,7 +89,6 @@ const Profile = () => {
               </div>
             )}
 
-            <OrdersHistory userId={profileData.userId} />
           </div>
         )}
       </div>
