@@ -40,6 +40,13 @@ const AdminHome = () => {
           >
             Меню
           </Link>
+
+          <Link
+            to="/admin/orders"
+            className="block text-center bg-yellow-500 text-white py-3 px-6 rounded-lg shadow-lg hover:bg-yellow-600"
+          >
+            Заказы
+          </Link>
         </div>
       </div>
     </div>

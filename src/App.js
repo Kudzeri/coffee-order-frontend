@@ -27,6 +27,7 @@ import AdminProductCreate from "./admin/product/Create";
 import Home from "./pages/Home";
 import EditProfile from './pages/EditProfile'
 import Cart from "./pages/Cart";
+import AdminOrderList from "./admin/order/List";
 
 function App() {
   return (
@@ -80,6 +81,10 @@ function App() {
             <Route
               path="/admin/products/edit/:slug"
               element={<AdminProductEdit />}
+            />
+            <Route
+              path="/admin/orders"
+              element={<AdminOrderList />}
             />
             <Route
               path="/admin/products/new"
