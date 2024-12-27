@@ -672,6 +672,9 @@ video {
 .h-full {
   height: 100%;
 }
+.h-24 {
+  height: 6rem;
+}
 .max-h-80 {
   max-height: 20rem;
 }
@@ -692,6 +695,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.w-24 {
+  width: 6rem;
 }
 .max-w-3xl {
   max-width: 48rem;
@@ -790,6 +796,9 @@ video {
 }
 .border-0 {
   border-width: 0px;
+}
+.border-2 {
+  border-width: 2px;
 }
 .border-gray-200 {
   --tw-border-opacity: 1;

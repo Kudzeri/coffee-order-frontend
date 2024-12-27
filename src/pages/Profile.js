@@ -38,6 +38,16 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
+  const getAvatar = () => {
+    if (profileData.role === "admin") {
+      return "https://headicon.trovo.live/user/kxujebqaaaaaa2gbzo57cj7rcy.png?ext=jpeg&t=1";
+    } else if (profileData.isAnonymous) {
+      return "https://i.pinimg.com/originals/4b/d8/fc/4bd8fc279520766dc9b89c7b3694a2cf.jpg";
+    } else {
+      return "https://cdn.fishki.net/upload/post/2024/02/09/4580749/0d18d3c267e48b179ece0eeedfec7669.png";
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -53,6 +63,13 @@ const Profile = () => {
 
         {!loading && !error && (
           <div>
+            <div className="flex justify-center mb-6">
+              <img
+                src={getAvatar()}
+                alt="Аватар"
+                className="w-24 h-24 rounded-full border-2 border-gray-300"
+              />
+            </div>
             <div className="mb-4">
               <strong className="text-gray-700">Имя:</strong>
               <p className="text-gray-600">{profileData.name}</p>
