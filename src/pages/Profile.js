@@ -78,7 +78,6 @@ const Profile = () => {
               </p>
             </div>
 
-            {/* Кнопка для админов */}
             {profileData.role === "admin" && (
               <div className="text-center mt-6">
                 <Link
@@ -90,7 +89,6 @@ const Profile = () => {
               </div>
             )}
 
-            {/* Кнопка редактирования для неанонимных пользователей */}
             {!profileData.isAnonymous && (
               <div className="text-center mt-4">
                 <Link
